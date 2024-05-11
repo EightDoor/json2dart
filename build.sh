@@ -1,5 +1,5 @@
 dist=docs
-# webdev build
+webdev build
 rm -rf $dist
 mkdir $dist
 cp build/*.ico $dist
