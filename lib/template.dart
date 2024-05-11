@@ -56,8 +56,7 @@ class $className {""";
 
   @override
   String field() {
-//    var useJsonKey
-
+    //  var useJsonKey
     var fieldList = FieldHelper(srcJson).getFields();
     var sb = StringBuffer();
     fieldList.forEach((f) {

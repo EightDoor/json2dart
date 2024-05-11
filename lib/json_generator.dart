@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
@@ -33,7 +32,6 @@ var saveButton;
 var saveLink;
 
 void main() async {
-  isChinese = await _isChinese();
   var dataHelper = CookieHelper();
   jsonInput = querySelector("#json");
   eClassName = querySelector("#class_name");
@@ -135,26 +133,6 @@ void main() async {
   });
 }
 
-Future<bool> _isChinese() async {
-  // var lang = await findSystemLocale();
-  List<MetaElement> elements = querySelectorAll("meta");
-
-  String? lang;
-  for (var e in elements) {
-    var _lang = e.getAttribute("lang");
-    if (_lang != null) {
-      lang = _lang;
-      break;
-    }
-  }
-  if (lang?.contains("zh") == true) {
-    return true;
-  }
-
-  return false;
-}
-
-bool isChinese = false;
 var generator;
 
 void refreshData() async {
@@ -165,12 +143,7 @@ void refreshData() async {
   try {
     formatJson(string);
   } on Exception {
-    if (isChinese) {
-      result.value = "不是一个正确的json";
-    } else {
-      result.value = "Not JSON";
-    }
-    return;
+    result.value = "不是一个正确的json";
   }
   String entityClassName;
   if (entityName == null || entityName == "" || entityName.trim() == "") {
@@ -196,11 +169,7 @@ void makeCode(Generator generator) {
   downloadFileName = dartFileName;
 
   String filePrefix;
-  if (isChinese) {
-    filePrefix = "应该使用的文件名为:";
-  } else {
-    filePrefix = "your dart file name is:";
-  }
+  filePrefix = "文件名为:";
   final resultName = "$filePrefix $dartFileName";
   writeToResult(resultName, dartCode);
 }
@@ -229,11 +198,8 @@ void showOrClassName() {
 void refreshClassNameChange(String text) {
   final value = generator.makeDartCode();
   String filePrefix;
-  if (isChinese) {
-    filePrefix = "应该使用的文件名为:";
-  } else {
-    filePrefix = "your dart file name is:";
-  }
+  filePrefix = "文件名为:";
+
   var dartFileName = ("${generator.fileName}.dart");
   downloadFileName = dartFileName;
   final resultName = "$filePrefix $dartFileName";
