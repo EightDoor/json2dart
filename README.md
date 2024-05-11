@@ -5,16 +5,16 @@
 ## 说明
 
 - json_serializable 可以参考 flutter 官网 json 部分 [flutter](https://flutter.io/json)
-- 项目使用 dart web 开发
+- 项目使用 dart web 开发 [webdev](https://dart.cn/tools/webdev)
 
 ## 开发环境
 
 - 本地启动
 
 ```shell
- dart pub global activate webdev
- // 运行
-  webdev serve
+dart pub global activate webdev
+# 运行
+webdev serve
 ```
 
 ```cli
