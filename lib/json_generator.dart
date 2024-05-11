@@ -10,7 +10,6 @@ String entityName = "";
 bool useJsonKey = true;
 
 bool isCamelCase = true;
-bool isStaticMethod = false;
 
 var downloadFileName = "";
 
@@ -98,17 +97,6 @@ void main() async {
 
   querySelector("#camelCaseLabel")!.onClick.listen((event) {
     eCamelCase.checked = !eCamelCase.checked;
-    refreshData();
-  });
-
-  eUseStatic.checked = isStaticMethod;
-  eUseStatic.onInput.listen((event) {
-    isStaticMethod = eUseStatic.checked;
-    refreshData();
-  });
-
-  querySelector("#useStaticLabel")!.onClick.listen((event) {
-    eUseStatic.checked = !eUseStatic.checked;
     refreshData();
   });
 

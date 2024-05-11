@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:json2dart_serialization/json_generator.dart' as main;
 
 abstract class Template {
@@ -45,11 +46,7 @@ class DefaultTemplate extends Template {
   @override
   String declare() {
     return """@JsonSerializable()
-  class $className extends Object ${interface()}{""";
-  }
-
-  String interface() {
-    return "with _\$${className}SerializerMixin";
+class $className {""";
   }
 
   @override
@@ -74,7 +71,7 @@ class DefaultTemplate extends Template {
       } else {
         nameString = f.nameString;
       }
-      sb.writeln("  ${f.typeString} $nameString;");
+      sb.writeln("  final ${f.typeString} $nameString;");
     });
     return sb.toString();
   }
@@ -97,10 +94,12 @@ class DefaultTemplate extends Template {
 
   @override
   String method() {
-    if (main.isStaticMethod) {
-      return "  static $className fromJson(Map<String, dynamic> srcJson) => _\$${className}FromJson(srcJson);";
-    }
-    return "  factory $className.fromJson(Map<String, dynamic> srcJson) => _\$${className}FromJson(srcJson);";
+    String result = """
+  factory $className.fromJson(Map<String, dynamic> srcJson) => _\$${className}FromJson(srcJson);
+  
+  Map<String, dynamic> toJson() => _\$${className}ToJson(this);
+        """;
+    return result;
   }
 
   List<Field> get fieldList => FieldHelper(srcJson).getFields();
@@ -165,24 +164,6 @@ class ListTemplate extends DefaultTemplate {
   @override
   List<Field> get fieldList =>
       FieldHelper(json.encode(json.decode(srcJson)[0])).getFields();
-}
-
-class V1Template extends DefaultTemplate {
-  V1Template({required String srcJson, String className = "Entity"})
-      : super(className: className, srcJson: srcJson);
-
-  @override
-  String interface() => "";
-
-  @override
-  String method() {
-    var result = StringBuffer();
-    result.writeln(super.method());
-    result.writeln();
-    result.write(
-        "  Map<String, dynamic> toJson() => _\$${className}ToJson(this);");
-    return result.toString();
-  }
 }
 
 class FieldHelper {
