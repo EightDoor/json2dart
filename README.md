@@ -4,7 +4,7 @@
 
 ## 说明
 
-- json_serializable 可以参考 flutter 官网 json 部分 [flutter](https://flutter.io/json)
+- json_serializable 可以参考 flutter 官网  [flutter](https://flutter.io/json)
 - 项目使用 dart web 开发 [webdev](https://dart.cn/tools/webdev)
 
 ## 开发环境
